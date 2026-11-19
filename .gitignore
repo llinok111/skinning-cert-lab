@@ -8,4 +8,5 @@ __pycache__/
 *.zip
 *.tar.gz
 *.tgz
-*.7zstate/
+*.7z
+state/
