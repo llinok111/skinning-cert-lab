@@ -1,0 +1,52 @@
+{
+  "generatedBy": "bench/bench.mjs",
+  "dataset": {
+    "name": "capped-cylinder-two-bone-rig",
+    "vertices": 4162,
+    "triangles": 8320,
+    "bones": 2,
+    "jointRingVertices": 64
+  },
+  "workload": {
+    "iterationsPerSample": 2000,
+    "samples": 7,
+    "pose": "twist 0.9*pi (162 deg)"
+  },
+  "methods": {
+    "lbs": {
+      "samples": 7,
+      "iterationsPerSample": 2000,
+      "coldStartMs": 5.682185000000004,
+      "minMs": 166.08874400000002,
+      "medianMs": 168.35296099999994,
+      "p95Ms": 195.7569,
+      "maxMs": 195.7569,
+      "stddevMs": 10.523135233909851,
+      "rsdPct": 6.087564945446221,
+      "msPer10kVertices": 0.20225007328207584
+    },
+    "dqs": {
+      "samples": 7,
+      "iterationsPerSample": 2000,
+      "coldStartMs": 7.847647000000002,
+      "minMs": 883.9620540000001,
+      "medianMs": 904.1025740000002,
+      "p95Ms": 936.2791569999999,
+      "maxMs": 936.2791569999999,
+      "stddevMs": 17.239314415027213,
+      "rsdPct": 1.9058303572843414,
+      "msPer10kVertices": 1.0861395651129269
+    }
+  },
+  "correctness": {
+    "lbsJointRadiusAt180": 6.679573113466034e-17,
+    "dqsJointRadiusAt180": 0.9999999999999999,
+    "analyticCos90": 6.123233995736766e-17,
+    "lbsOracleMaxAbsRadiusError": 8.881784197001252e-16,
+    "weightSumMaxAbsError": 0,
+    "signedVolumeRatioAt180": {
+      "lbs": 0.8706503709157414,
+      "dqs": 0.9970371893983894
+    }
+  }
+}

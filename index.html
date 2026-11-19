@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>skinning-cert-lab — LBS vs dual-quaternion candy-wrapper certificate</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #0a0d13; color: #e8edf6;
+      font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+    #app { position: fixed; inset: 0; }
+    canvas { display: block; }
+    .panel {
+      position: absolute; top: 16px; left: 16px; width: 330px; padding: 16px 18px;
+      background: rgba(12, 17, 27, 0.86); border: 1px solid #263042; border-radius: 12px;
+      backdrop-filter: blur(8px); box-shadow: 0 12px 36px rgba(0,0,0,.45);
+    }
+    h1 { margin: 0 0 2px; font-size: 15px; letter-spacing: .02em; }
+    .sub { margin: 0 0 12px; color: #8a98ad; font-size: 11.5px; }
+    .row { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; }
+    .row span:last-child { font-variant-numeric: tabular-nums; color: #d7e2f4; }
+    .k { color: #8a98ad; }
+    .good { color: #63e6a2 !important; }
+    .bad { color: #ff7b7b !important; }
+    .warn { color: #ffc766 !important; }
+    hr { border: 0; border-top: 1px solid #223047; margin: 11px 0; }
+    .controls { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+      width: min(680px, calc(100vw - 32px)); padding: 14px 20px; background: rgba(12,17,27,.9);
+      border: 1px solid #263042; border-radius: 12px; backdrop-filter: blur(8px); }
+    .line { display: flex; align-items: center; gap: 14px; }
+    input[type=range] { flex: 1; accent-color: #5aa9ff; }
+    .angle { width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-size: 18px; font-weight: 600; }
+    .modes { display: flex; gap: 6px; margin-top: 10px; }
+    button { flex: 1; padding: 7px 10px; border-radius: 8px; border: 1px solid #2c3a51;
+      background: #141b27; color: #a9b7cc; cursor: pointer; font: inherit; }
+    button.on { border-color: #5aa9ff; color: #fff; background: #1b3352; }
+    .hint { margin-top: 8px; color: #73829a; font-size: 11px; }
+    .legend { display: flex; align-items: center; gap: 8px; margin-top: 10px; color: #8a98ad; font-size: 11px; }
+    .swatch { width: 84px; height: 8px; border-radius: 4px;
+      background: linear-gradient(90deg, #ff4d4d, #ffc766, #63e6a2, #5aa9ff); }
+    #err { color: #ff7b7b; margin-top: 8px; }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <div class="panel">
+    <h1>skinning-cert-lab</h1>
+    <p class="sub">Candy-wrapper certificate: a 2-bone twist of a capped cylinder. Every number here is recomputed in your browser by the same <code>src/core.mjs</code> that <code>bench/verify.mjs</code> runs in node.</p>
+    <div class="row"><span class="k">joint radius · LBS (measured)</span><span id="s-lbs">—</span></div>
+    <div class="row"><span class="k">analytic oracle · cos(θ/2)</span><span id="s-oracle">—</span></div>
+    <div class="row"><span class="k">joint radius · DQS (measured)</span><span id="s-dqs">—</span></div>
+    <hr />
+    <div class="row"><span class="k">oracle max |Δr| (all verts)</span><span id="s-oracle-err">—</span></div>
+    <div class="row"><span class="k">DQS max |Δr| (all verts)</span><span id="s-dqs-err">—</span></div>
+    <div class="row"><span class="k">signed-volume ratio · LBS</span><span id="s-vol-l">—</span></div>
+    <div class="row"><span class="k">signed-volume ratio · DQS</span><span id="s-vol-d">—</span></div>
+    <div class="row"><span class="k">weight sum max |Σw−1|</span><span id="s-w">—</span></div>
+    <hr />
+    <div class="row"><span class="k">node gate</span><span class="good">18/18 assertions</span></div>
+    <div id="err"></div>
+  </div>
+
+  <div class="controls">
+    <div class="line">
+      <span class="k">twist</span>
+      <input id="angle" type="range" min="0" max="180" step="5" value="180" />
+      <span class="angle" id="angle-v">180°</span>
+    </div>
+    <div class="modes">
+      <button id="m-lbs" class="on">Linear blend (LBS)</button>
+      <button id="m-dqs">Dual quaternion (DQS)</button>
+    </div>
+    <div class="legend"><span>radius loss</span><span class="swatch"></span><span>radius kept</span></div>
+    <div class="hint">Drag to orbit · scroll to zoom · move the twist slider and watch LBS collapse at the joint while DQS holds the radius</div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
